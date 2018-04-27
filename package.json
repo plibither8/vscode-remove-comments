@@ -8,16 +8,16 @@
         "vscode": "^1.22.0"
     },
     "categories": [
-        "Other"
+        "Formatters"
     ],
     "activationEvents": [
-        "onCommand:extension.removeAllComments"
+        "onCommand:extension.removeComments"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.removeAllComments",
+                "command": "extension.removeComments",
                 "title": "Remove all comments"
             }
         ]
