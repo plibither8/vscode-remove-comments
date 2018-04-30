@@ -5,6 +5,8 @@ export class Parser {
 
     private expression: string = "";
     private delimiter: string = "";
+    private multilineComments: boolean = false;
+    private config: any = vscode.workspace.getConfiguration('remove-comments').multilineComments;
 
     public supportedLanguage = true;
 
@@ -29,7 +31,7 @@ export class Parser {
         while (match = regEx.exec(text)) {
 
             let startPos = activeEditor.document.positionAt(match.index);
-            let endPos = startPos.character === 0 ? new vscode.Position(startPos.line + 1, 0) : activeEditor.document.positionAt(match.index + match[0].length);
+            let endPos = !startPos.character ? new vscode.Position(startPos.line + 1, 0): activeEditor.document.positionAt(match.index + match[0].length);
             let range = new vscode.Range(startPos, endPos);
             edit.delete(uri, range);
 
@@ -37,6 +39,46 @@ export class Parser {
 
         vscode.workspace.applyEdit(edit);
 
+    }
+
+    public FindMultilineComments(activeEditor: vscode.TextEditor, findJSDoc: boolean = false): void {
+
+        // If highlight multiline is off in package.json or doesn't apply to his language, return
+        if (!this.multilineComments) {
+            return;
+        }
+
+        let text = activeEditor.document.getText();
+
+        // Combine custom delimiters and the rest of the comment block matcher
+        let commentMatchString: string = "";
+        let regEx: RegExp;
+
+        if (findJSDoc) {
+            commentMatchString = "(^)+([ \\t]*\\*[ \\t]*)("; // Highlight after leading *
+            regEx = /(^|[ \t])(\/\*\*)+([\s\S]*?)(\*\/)/gm; // Find rows of comments matching pattern /** */		
+        } else {
+            commentMatchString = "(^)+([ \\t]*[ \\t]*)("; // Don't expect the leading *
+            regEx = /(^|[ \t])(\/\*[^*])+([\s\S]*?)(\*\/)/gm; // Find rows of comments matching pattern /* */
+        }
+
+        commentMatchString += ")([ ]*|[:])+([^*/][^\\r\\n]*)";
+
+        let commentRegEx = new RegExp(commentMatchString, "igm");
+
+        // Find the multiline comment block
+        let match: any;
+        while (match = regEx.exec(text)) {
+            let commentBlock = match[0];
+
+            // Find the line
+            let line;
+            while (line = commentRegEx.exec(commentBlock)) {
+                let startPos = activeEditor.document.positionAt(match.index + line.index + line[2].length);
+                let endPos = activeEditor.document.positionAt(match.index + line.index + line[0].length);
+                let range: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
+            }
+        }
     }
 
     private setDelimiter(languageCode: string): void {
@@ -66,6 +108,7 @@ export class Parser {
             case "typescript":
             case "typescriptreact":
                 this.delimiter = "//";
+                this.multilineComments = this.config;
                 break;
 
             case "coffeescript":
@@ -110,6 +153,7 @@ export class Parser {
 
             case "terraform":
                 this.delimiter = "#";
+                this.multilineComments = this.config;
                 break;
 
             default:
