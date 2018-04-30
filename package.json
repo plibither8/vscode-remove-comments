@@ -15,6 +15,15 @@
     ],
     "main": "./out/extension",
     "contributes": {
+        "configuration": {
+            "title": "Better Comments configuration",
+            "properties": {
+                "remove-comments.multilineComments": {
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        },
         "commands": [
             {
                 "command": "extension.removeComments",
