@@ -2,47 +2,39 @@ import * as vscode from 'vscode';
 
 
 export class Parser {
+
     private expression: string = "";
     private delimiter: string = "";
 
     public supportedLanguage = true;
 
     public SetRegex(languageCode: string) {
+
         this.setDelimiter(languageCode);
 
         this.expression = "(" + this.delimiter.replace(/\//ig, "\\/") + ")+( |\t)*";
-
         this.expression += "(";
         this.expression += ")+(.*)";
+
     }
 
     public FindSingleLineComments(activeEditor: vscode.TextEditor): any {
 
-        // console.log("yay");
         let text = activeEditor.document.getText();
         let uri = activeEditor.document.uri;
-        let regExDelete = new RegExp(this.expression, "ig");
-        // let regExReplace = new RegExp("/(?:\r\n|\r|\n)/", "igm");
+        let regEx = new RegExp(this.expression, "ig");
         let match: any;
         let edit = new vscode.WorkspaceEdit();
 
-        while (match = regExDelete.exec(text)) {
+        while (match = regEx.exec(text)) {
 
             let startPos = activeEditor.document.positionAt(match.index);
-            let endPos = activeEditor.document.positionAt(match.index + match[0].length);
+            let endPos = startPos.character === 0 ? new vscode.Position(startPos.line + 1, 0) : activeEditor.document.positionAt(match.index + match[0].length);
             let range = new vscode.Range(startPos, endPos);
             edit.delete(uri, range);
 
         }
 
-        // text = activeEditor.document.getText();
-        // match = null;
-        // console.log(regExReplace.exec(text));
-        // while (match = regExReplace.exec(text)) {
-        //     console.log(match);
-        //     let startPos = activeEditor.document.positionAt(match.index);            
-        //     edit.replace(uri, new vscode.Range(startPos.line, 0, startPos.line + 1, 0), '/(\n)/');
-        // }
         vscode.workspace.applyEdit(edit);
 
     }
