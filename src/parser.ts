@@ -20,23 +20,31 @@ export class Parser {
 
         // console.log("yay");
         let text = activeEditor.document.getText();
-        let regEx = new RegExp(this.expression, "ig");
-
+        let uri = activeEditor.document.uri;
+        let regExDelete = new RegExp(this.expression, "ig");
+        // let regExReplace = new RegExp("/(?:\r\n|\r|\n)/", "igm");
         let match: any;
-        while (match = regEx.exec(text)) {
+        let edit = new vscode.WorkspaceEdit();
 
-            let edit = new vscode.WorkspaceEdit();
-        
-            // console.log(match);
+        while (match = regExDelete.exec(text)) {
+
             let startPos = activeEditor.document.positionAt(match.index);
             let endPos = activeEditor.document.positionAt(match.index + match[0].length);
             let range = new vscode.Range(startPos, endPos);
-            console.log(range);
-            edit.delete(activeEditor.document.uri, range);
-            // console.log(range);
-            vscode.workspace.applyEdit(edit);
+            edit.delete(uri, range);
 
         }
+
+        // text = activeEditor.document.getText();
+        // match = null;
+        // console.log(regExReplace.exec(text));
+        // while (match = regExReplace.exec(text)) {
+        //     console.log(match);
+        //     let startPos = activeEditor.document.positionAt(match.index);            
+        //     edit.replace(uri, new vscode.Range(startPos.line, 0, startPos.line + 1, 0), '/(\n)/');
+        // }
+        vscode.workspace.applyEdit(edit);
+
     }
 
     private setDelimiter(languageCode: string): void {
