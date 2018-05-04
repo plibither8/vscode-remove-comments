@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         parser.FindSingleLineComments(activeEditor);
+        parser.FindMultilineComments(activeEditor);
 
     }
 

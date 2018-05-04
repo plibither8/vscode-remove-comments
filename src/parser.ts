@@ -7,6 +7,7 @@ export class Parser {
     private delimiter: string = "";
     private multilineComments: boolean = false;
     private config: any = vscode.workspace.getConfiguration('remove-comments').multilineComments;
+    private edit: any = new vscode.WorkspaceEdit();
 
     public supportedLanguage = true;
 
@@ -24,62 +25,44 @@ export class Parser {
         let uri = activeEditor.document.uri;
         let regEx = new RegExp(this.expression, "ig");
         let match: any;
-        let edit = new vscode.WorkspaceEdit();
 
         while (match = regEx.exec(text)) {
 
             let startPos = activeEditor.document.positionAt(match.index);
             let endPos = !startPos.character ? new vscode.Position(startPos.line + 1, 0): activeEditor.document.positionAt(match.index + match[0].length);
             let range = new vscode.Range(startPos, endPos);
-            edit.delete(uri, range);
+            this.edit.delete(uri, range);
 
         }
 
-        vscode.workspace.applyEdit(edit);
-
     }
 
-    public FindMultilineComments(activeEditor: vscode.TextEditor, findJSDoc: boolean = false): void {
+    public FindMultilineComments(activeEditor: vscode.TextEditor): void {
 
-        // If highlight multiline is off in package.json or doesn't apply to his language, return
         if (!this.multilineComments) {
             return;
         }
 
         let text = activeEditor.document.getText();
-
-        // Combine custom delimiters and the rest of the comment block matcher
-        let commentMatchString: string = "";
-        let regEx: RegExp;
-
-        if (findJSDoc) {
-            commentMatchString = "(^)+([ \\t]*\\*[ \\t]*)("; // Highlight after leading *
-            regEx = /(^|[ \t])(\/\*\*)+([\s\S]*?)(\*\/)/gm; // Find rows of comments matching pattern /** */		
-        } else {
-            commentMatchString = "(^)+([ \\t]*[ \\t]*)("; // Don't expect the leading *
-            regEx = /(^|[ \t])(\/\*[^*])+([\s\S]*?)(\*\/)/gm; // Find rows of comments matching pattern /* */
-        }
-
-        commentMatchString += ")([ ]*|[:])+([^*/][^\\r\\n]*)";
-
-        let commentRegEx = new RegExp(commentMatchString, "igm");
-
-        // Find the multiline comment block
+        let uri = activeEditor.document.uri;
+        let regEx: RegExp = /(^|[ \t])(\/\*[^*])+([\s\S]*?)(\*\/)/gm;
         let match: any;
-        while (match = regEx.exec(text)) {
-            let commentBlock = match[0];
 
-            // Find the line
-            let line;
-            while (line = commentRegEx.exec(commentBlock)) {
-                let startPos = activeEditor.document.positionAt(match.index + line.index + line[2].length);
-                let endPos = activeEditor.document.positionAt(match.index + line.index + line[0].length);
-                let range: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
-            }
+        while (match = regEx.exec(text)) {
+
+            let startPos = activeEditor.document.positionAt(match.index);
+            let endPos = activeEditor.document.positionAt(match.index + match[0].length);
+            let range = new vscode.Range(startPos, endPos);
+            this.edit.delete(uri, range);
+
         }
+
+        vscode.workspace.applyEdit(this.edit);
+
     }
 
     private setDelimiter(languageCode: string): void {
+        
         this.supportedLanguage = true;
 
         switch (languageCode) {
@@ -158,5 +141,7 @@ export class Parser {
                 this.supportedLanguage = false;
                 break;
         }
+
     }
+
 }
