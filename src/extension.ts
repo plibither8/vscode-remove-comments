@@ -8,17 +8,16 @@ export function activate(context: vscode.ExtensionContext) {
 
     let removeComments = function () {
 
-        if (!activeEditor) {
-            return;
-        }
-        if (!parser.supportedLanguage) {
+        if (!activeEditor || !parser.supportedLanguage) {
             return;
         }
 
         parser.FindSingleLineComments(activeEditor);
         parser.FindMultilineComments(activeEditor);
 
-    }
+        vscode.workspace.applyEdit(parser.edit);
+
+    };
 
 
     let removeCommentsCommand = vscode.commands.registerCommand('extension.removeComments', () => {

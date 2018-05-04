@@ -7,8 +7,8 @@ export class Parser {
     private delimiter: string = "";
     private multilineComments: boolean = false;
     private config: any = vscode.workspace.getConfiguration('remove-comments').multilineComments;
-    private edit: any = new vscode.WorkspaceEdit();
-
+    
+    public edit: any = new vscode.WorkspaceEdit();
     public supportedLanguage = true;
 
     public SetRegex(languageCode: string) {
@@ -56,8 +56,6 @@ export class Parser {
             this.edit.delete(uri, range);
 
         }
-
-        vscode.workspace.applyEdit(this.edit);
 
     }
 
