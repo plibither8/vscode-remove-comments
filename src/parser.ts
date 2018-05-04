@@ -12,9 +12,7 @@ export class Parser {
 
         this.setDelimiter(languageCode);
 
-        this.expression = "(" + this.delimiter.replace(/\//ig, "\\/") + ")+( |\t)*";
-        this.expression += "(";
-        this.expression += ")+(.*)";
+        this.expression = "(" + this.delimiter.replace(/\//ig, "\\/") + ")+( |\t)*(.*)";
 
     }
 
