@@ -1,12 +1,13 @@
 {
     "name": "remove-comments",
     "displayName": "Remove Comments",
-    "description": "Remove all comments from your code at once!",
-    "version": "0.0.1",
+    "description": "Remove all comments from your code at once! Unclutter and undocument your code in one go!",
+    "version": "0.3.0",
     "publisher": "plibither8",
     "license": "MIT",
+    "icon": "assets/icon.png",
     "author": {
-        "name": "Aaron Bond"
+        "name": "Mihir Chaturvedi"
     },
     "homepage": "https://github.com/plibither8/vscode-remove-comments/blob/master/README.md",
     "repository": {
@@ -21,14 +22,15 @@
         "Formatters"
     ],
     "keywords": [
-        "comment", "comments", "delete", "remove"
+        "comment",
+        "comments",
+        "delete",
+        "remove"
     ],
     "activationEvents": [
         "onCommand:extension.removeComments"
     ],
-    "gallaryBanner": {
-
-    },
+    "gallaryBanner": {},
     "main": "./out/extension",
     "contributes": {
         "configuration": {
