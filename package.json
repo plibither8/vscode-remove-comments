@@ -2,7 +2,7 @@
     "name": "remove-comments",
     "displayName": "Remove Comments",
     "description": "Remove all comments from your code at once! Unclutter and undocument your code in one go!",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "plibither8",
     "license": "MIT",
     "icon": "assets/icon.png",
@@ -28,13 +28,15 @@
         "remove"
     ],
     "activationEvents": [
-        "onCommand:extension.removeComments"
+        "onCommand:extension.removeAllComments",
+        "onCommand:extension.removeSingleLineComments",
+        "onCommand:extension.removeMultilineComments"
     ],
     "gallaryBanner": {},
     "main": "./out/extension",
     "contributes": {
         "configuration": {
-            "title": "Better Comments configuration",
+            "title": "Remove Comments configuration",
             "properties": {
                 "remove-comments.multilineComments": {
                     "type": "boolean",
@@ -44,8 +46,16 @@
         },
         "commands": [
             {
-                "command": "extension.removeComments",
-                "title": "Remove all comments"
+                "command": "extension.removeAllComments",
+                "title": "Remove All Comments"
+            },
+            {
+                "command": "extension.removeSingleLineComments",
+                "title": "Remove All Single Line Comments"
+            },
+            {
+                "command": "extension.removeMultilineComments",
+                "title": "Remove All Multiline Comments"
             }
         ]
     },
