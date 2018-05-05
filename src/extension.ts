@@ -26,50 +26,42 @@ export function activate(context: vscode.ExtensionContext) {
 
     };
 
+    // Register commands here
 
     let removeAllCommentsCommand = vscode.commands.registerCommand('extension.removeAllComments', () => {
 
         if (vscode.window.activeTextEditor) {
-
             activeEditor = vscode.window.activeTextEditor;
             parser.SetRegex(activeEditor.document.languageId);
             removeComments(2);
+        }
 
+    });
+
+    let removeSingleLineCommentsCommand = vscode.commands.registerCommand('extension.removeSingleLineComments', () => {
+
+        if (vscode.window.activeTextEditor) {
+            activeEditor = vscode.window.activeTextEditor;
+            parser.SetRegex(activeEditor.document.languageId);
+            removeComments(0);
+        }
+
+    });
+
+    let removeMultilineCommentsCommand = vscode.commands.registerCommand('extension.removeMultilineComments', () => {
+
+        if (vscode.window.activeTextEditor) {
+            activeEditor = vscode.window.activeTextEditor;
+            parser.SetRegex(activeEditor.document.languageId);
+            removeComments(1);
         }
 
     });
 
     context.subscriptions.push(removeAllCommentsCommand);
-
-    let removeSingleLineCommentsCommand = vscode.commands.registerCommand('extension.removeSingleLineComments', () => {
-
-        if (vscode.window.activeTextEditor) {
-
-            activeEditor = vscode.window.activeTextEditor;
-            parser.SetRegex(activeEditor.document.languageId);
-            removeComments(0);
-
-        }
-
-    });
-
     context.subscriptions.push(removeSingleLineCommentsCommand);
-
-    let removeMultilineCommentsCommand = vscode.commands.registerCommand('extension.removeMultilineComments', () => {
-
-        if (vscode.window.activeTextEditor) {
-
-            activeEditor = vscode.window.activeTextEditor;
-            parser.SetRegex(activeEditor.document.languageId);
-            removeComments(1);
-
-        }
-
-    });
-
     context.subscriptions.push(removeMultilineCommentsCommand);
 
 }
-
 
 export function deactivate() { }
