@@ -1,8 +1,17 @@
 # Remove Comments
+<center>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://vsmarketplacebadge.apphb.com/version/plibither8.remove-comments.svg)](https://marketplace.visualstudio.com/items?itemName=plibither8.remove-comments)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/plibither8.remove-comments.svg)](https://marketplace.visualstudio.com/items?itemName=plibither8.remove-comments)
+
+[![Made_with_love_in India](https://img.shields.io/badge/Made_with_love_in-India-DC3545.svg)](https://madewithlove.org.in/)
 
 Just copy-pasted some code from somewhere and it's obscenely documented with unnecessary comments everywhere? *Remove Comments* will help you undocument the code and remove all the comments present in the code by doing the job for you.
 
 *Remove Comments* is a **Visual Studio Code** extension.
+
+</center>
 
 ## Features
 
@@ -83,5 +92,3 @@ ext install plibither8.remove-comments
 Copyright (c) Mihir Chaturvedi. All rights reserved.
 
 Licensed under the [MIT](LICENSE) License.
-
-**Made with love in India**
