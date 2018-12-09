@@ -3,38 +3,55 @@ import * as vscode from 'vscode';
 
 export class Parser {
 
-    private expression: string = "";
-    private delimiter: string = "";
+    private delimiters: string[] = [];
+    private removeRanges: boolean[] = [];
     private multilineComments: boolean = false;
     private config: any = vscode.workspace.getConfiguration('remove-comments').multilineComments;
-    
-    public edit: any = new vscode.WorkspaceEdit();
+
+    public edit: vscode.WorkspaceEdit = new vscode.WorkspaceEdit();
+    public uri: any;
     public supportedLanguage = true;
 
-    public SetRegex(languageCode: string) {
+    public SetRegex(activeEditor: vscode.TextEditor, languageCode: string) {
 
-        this.setDelimiter(languageCode);
-
-        this.expression = "(" + this.delimiter.replace(/\//ig, "\\/") + ")+( |\t)*(.*)";
-
+        if (this.setDelimiter(languageCode)) {
+            this.edit = new vscode.WorkspaceEdit();
+            this.uri = activeEditor.document.uri;
+        } else {
+            vscode.window.showInformationMessage("Cannot remove comments : unknown language (" + languageCode + ")");
+        }
     }
 
     public FindSingleLineComments(activeEditor: vscode.TextEditor): any {
-
-        let text = activeEditor.document.getText();
-        let uri = activeEditor.document.uri;
-        let regEx = new RegExp(this.expression, "ig");
-        let match: any;
-
-        while (match = regEx.exec(text)) {
-
-            let startPos = activeEditor.document.positionAt(match.index);
-            let endPos = !startPos.character ? new vscode.Position(startPos.line + 1, 0): activeEditor.document.positionAt(match.index + match[0].length);
-            let range = new vscode.Range(startPos, endPos);
-            this.edit.delete(uri, range);
-
+        for (var l = 0; l < activeEditor.document.lineCount; l++) {
+            let line = activeEditor.document.lineAt(l);
+            let matched = false;
+            for (var i = 0; i < this.delimiters.length; i++) {
+                if (!matched) {
+                    let expression = this.delimiters[i].replace(/\//ig, "\\/");
+                    let removeRange = this.removeRanges[i];
+                    let regEx = new RegExp(expression, "ig");
+                    let match = regEx.exec(line.text);
+                    if (match) {
+                        if (removeRange) {
+                            let startPos = new vscode.Position(l, match.index);
+                            let endPos = new vscode.Position(l, line.text.length);
+                            let range = new vscode.Range(startPos, endPos);
+                            this.edit.delete(this.uri, range);
+                            let n = activeEditor.document.getText(range);
+                            console.log("Removing : " + n);
+                        } else {
+                            let startPos = new vscode.Position(l, match.index);
+                            let endPos = new vscode.Position(l + 1, 0);
+                            let range = new vscode.Range(startPos, endPos);
+                            this.edit.delete(this.uri, range);
+                        }
+                        
+                        matched = true;
+                    }
+                }
+            }
         }
-
     }
 
     public FindMultilineComments(activeEditor: vscode.TextEditor): void {
@@ -59,9 +76,11 @@ export class Parser {
 
     }
 
-    private setDelimiter(languageCode: string): void {
-        
+    private setDelimiter(languageCode: string): boolean {
+
         this.supportedLanguage = true;
+        this.delimiters = [];
+        this.removeRanges = [];
 
         switch (languageCode) {
             case "al":
@@ -86,7 +105,8 @@ export class Parser {
             case "swift":
             case "typescript":
             case "typescriptreact":
-                this.delimiter = "//";
+                this.delimiters.push("//");
+                this.removeRanges.push(true);
                 this.multilineComments = this.config;
                 break;
 
@@ -104,7 +124,8 @@ export class Parser {
             case "ruby":
             case "shellscript":
             case "yaml":
-                this.delimiter = "#";
+                this.delimiters.push("#");
+                this.removeRanges.push(true);
                 break;
 
             case "ada":
@@ -112,34 +133,49 @@ export class Parser {
             case "plsql":
             case "sql":
             case "lua":
-                this.delimiter = "--";
+                this.delimiters.push("--");
+                this.removeRanges.push(true);
                 break;
 
             case "vb":
-                this.delimiter = "'";
+                this.delimiters.push("'");
+                this.removeRanges.push(true);
                 break;
 
             case "erlang":
             case "latex":
-                this.delimiter = "%";
+                this.delimiters.push("%");
+                this.removeRanges.push(true);
                 break;
 
             case "clojure":
             case "racket":
             case "lisp":
-                this.delimiter = ";";
+                this.delimiters.push(";");
+                this.removeRanges.push(true);
                 break;
 
             case "terraform":
-                this.delimiter = "#";
+                this.delimiters.push("#");
+                this.removeRanges.push(true);
                 this.multilineComments = this.config;
                 break;
 
+            case "ACUCOBOL":
+            case "OpenCOBOL":
+            case "COBOL":
+                this.delimiters.push("\\*>");
+                this.removeRanges.push(true);
+                this.delimiters.push("^......\\*");
+                this.removeRanges.push(false);
+                this.multilineComments = false;
+                break;
             default:
                 this.supportedLanguage = false;
                 break;
         }
 
+        return this.supportedLanguage;
     }
 
 }

@@ -23,7 +23,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         vscode.workspace.applyEdit(parser.edit);
-
     };
 
     // Register commands here
@@ -32,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (vscode.window.activeTextEditor) {
             activeEditor = vscode.window.activeTextEditor;
-            parser.SetRegex(activeEditor.document.languageId);
+            parser.SetRegex(activeEditor, activeEditor.document.languageId);
             removeComments(2);
         }
 
@@ -42,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (vscode.window.activeTextEditor) {
             activeEditor = vscode.window.activeTextEditor;
-            parser.SetRegex(activeEditor.document.languageId);
+            parser.SetRegex(activeEditor, activeEditor.document.languageId);
             removeComments(0);
         }
 
@@ -52,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (vscode.window.activeTextEditor) {
             activeEditor = vscode.window.activeTextEditor;
-            parser.SetRegex(activeEditor.document.languageId);
+            parser.SetRegex(activeEditor, activeEditor.document.languageId);
             removeComments(1);
         }
 
