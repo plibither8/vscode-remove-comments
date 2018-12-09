@@ -33,9 +33,11 @@ ext install plibither8.remove-comments
 
 # Supported Languages
 
+* ACUCOBOL
 * Ada
 * AL
 * C
+* COBOL
 * Clojure
 * CoffeeScript
 * CSS
@@ -63,6 +65,7 @@ ext install plibither8.remove-comments
 * Makefile
 * Objective-C
 * Objective-C++
+* OpenCOBOL
 * Pascal
 * Perl
 * Perl 6
