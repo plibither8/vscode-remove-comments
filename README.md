@@ -43,6 +43,7 @@ ext install plibither8.remove-comments
 * CSS
 * C++
 * C#
+* Dart
 * Dockerfile
 * Elixir
 * Erlang
