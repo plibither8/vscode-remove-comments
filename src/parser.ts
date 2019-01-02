@@ -88,6 +88,7 @@ export class Parser {
             case "cpp":
             case "csharp":
             case "css":
+            case "dart":
             case "fsharp":
             case "go":
             case "haxe":
