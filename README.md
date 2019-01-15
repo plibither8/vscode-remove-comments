@@ -1,4 +1,5 @@
 # Remove Comments
+
 <center>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -7,31 +8,39 @@
 
 [![Made_with_love_in India](https://img.shields.io/badge/Made_with_love_in-India-DC3545.svg)](https://madewithlove.org.in/)
 
+![Demo of usage](assets/remove-comments.gif)
+
+</center>
+
+## About
+
 Just copy-pasted some code from somewhere and it's obscenely documented with unnecessary comments everywhere? *Remove Comments* will help you undocument the code and remove all the comments present in the code by doing the job for you.
 
 *Remove Comments* is a **Visual Studio Code** extension.
 
-</center>
-
-## Features
+### :tada: Features
 
 * Supports both inline and multiline comments
-* Support for 60+ languages
-### Note:
-This extension does not 'uncomment' the comments present in the code, but removes them completely altogether.
+* Support for 60+ languages :globe_with_meridians:
 
-# Instructions
+> Note: This extension does not 'uncomment' the comments present in the code, but removes them completely altogether.
 
-![Demo of usage](assets/remove-comments.gif)
+### :memo: Usage
 
-* Install this extension on VS Code by searching for it *("Remove Comments")* in the 'Extensions' tab, launching VS Code Quick Open (Ctrl+P), pasting the following command, and pressing enter:
-```
+* Install the extension by searching for *Remove Comments* in the editor's 'Extensions' tab, or by launching VS Code Quick Open (<kbd>Ctrl</kbd>+<kbd>P</kbd>) and entering:
+
+```txt
 ext install plibither8.remove-comments
 ```
-* Once installed, remove comments in your code by opening the command palette (Ctrl+Shift+P), entering "Remove all comments" and pressing enter.
-* Voilà, all the comments are gone!
 
-# Supported Languages
+* Once installed, remove comments in your code by opening the command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>), entering "Remove all comments" and pressing enter.
+* Voilà, all the comments are gone :tada:!
+
+### :globe_with_meridians: Supported Languages
+
+<details>
+
+<summary>List of Supported Languages</summary>
 
 * ACUCOBOL
 * Ada
@@ -91,7 +100,11 @@ ext install plibither8.remove-comments
 * Visual Basic
 * YAML
 
-# License
+</details>
+
+---
+
+## License
 
 Copyright (c) Mihir Chaturvedi. All rights reserved.
 
