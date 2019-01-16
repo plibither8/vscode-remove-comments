@@ -2,7 +2,7 @@
     "name": "remove-comments",
     "displayName": "Remove Comments",
     "description": "Remove all comments from your code at once! Unclutter and undocument your code in one go!",
-    "version": "1.1.2",
+    "version": "1.2.2",
     "publisher": "plibither8",
     "license": "MIT",
     "icon": "assets/icon.png",
