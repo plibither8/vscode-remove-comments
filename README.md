@@ -1,4 +1,4 @@
-# Remove Comments
+# 🚫 Remove Comments
 
 <center>
 
@@ -12,20 +12,20 @@
 
 </center>
 
-## About
+## 📜 About
 
 Just copy-pasted some code from somewhere and it's obscenely documented with unnecessary comments everywhere? *Remove Comments* will help you undocument the code and remove all the comments present in the code by doing the job for you.
 
 *Remove Comments* is a **Visual Studio Code** extension.
 
-### :tada: Features
+### ✨ Features
 
 * Supports both inline and multiline comments
-* Support for 60+ languages :globe_with_meridians:
+* Support for 60+ languages 🌐
 
 > Note: This extension does not 'uncomment' the comments present in the code, but removes them completely altogether.
 
-### :memo: Usage
+### 📝 Usage
 
 * Install the extension by searching for *Remove Comments* in the editor's 'Extensions' tab, or by launching VS Code Quick Open (<kbd>Ctrl</kbd>+<kbd>P</kbd>) and entering:
 
@@ -34,9 +34,9 @@ ext install plibither8.remove-comments
 ```
 
 * Once installed, remove comments in your code by opening the command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>), entering "Remove all comments" and pressing enter.
-* Voilà, all the comments are gone :tada:!
+* Voilà, all the comments are gone 🎉!
 
-### :globe_with_meridians: Supported Languages
+### 🌐 Supported Languages
 
 <details>
 
@@ -104,7 +104,7 @@ ext install plibither8.remove-comments
 
 ---
 
-## License
+## ⚖️ License
 
 Copyright (c) Mihir Chaturvedi. All rights reserved.
 
