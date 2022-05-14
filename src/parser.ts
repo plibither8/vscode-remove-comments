@@ -152,6 +152,7 @@ export class Parser {
             case "clojure":
             case "racket":
             case "lisp":
+            case "ca65":
                 this.delimiters.push(";");
                 this.removeRanges.push(true);
                 break;
