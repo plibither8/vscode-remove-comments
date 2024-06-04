@@ -30,7 +30,8 @@ export class Parser {
                 if (!matched) {
                     let expression = this.delimiters[i].replace(/\//ig, "\\/");
                     let removeRange = this.removeRanges[i];
-                    let regEx = new RegExp(expression, "ig");
+                    //let regEx = new RegExp(expression, "ig"); // see bug #34 (https://github.com/plibither8/vscode-remove-comments/issues/34) https://regex101.com/r/1M3UCa/1
+                    let regEx = new RegExp(expression + "(?=(?:[^\"'`]*\"[^\"'`]*\")*(?:[^\"'`]*'[^\"'`]*')*(?:[^\"'`]*`[^\"'`]*`)*[^\"'`]*$)", "igm"); // resolves bug #34 (https://regex101.com/r/4SE3O5/1)
                     let match = regEx.exec(line.text);
                     if (match) {
                         if (removeRange) {
