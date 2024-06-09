@@ -1,10 +1,10 @@
 # 🚫 Remove Comments
 
+Forked from the no longer maintained [plibither8/vscode-remove-comments](https://github.com/plibither8/vscode-remove-comments)
+
 <center>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://vsmarketplacebadge.apphb.com/version/plibither8.remove-comments.svg)](https://marketplace.visualstudio.com/items?itemName=plibither8.remove-comments)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/plibither8.remove-comments.svg)](https://marketplace.visualstudio.com/items?itemName=plibither8.remove-comments)
 
 [![Made_with_love_in India](https://img.shields.io/badge/Made_with_love_in-India-DC3545.svg)](https://madewithlove.org.in/)
 
@@ -30,7 +30,7 @@ Just copy-pasted some code from somewhere and it's obscenely documented with unn
 * Install the extension by searching for *Remove Comments* in the editor's 'Extensions' tab, or by launching VS Code Quick Open (<kbd>Ctrl</kbd>+<kbd>P</kbd>) and entering:
 
 ```txt
-ext install plibither8.remove-comments
+ext install sumonst21.remove-comments
 ```
 
 * Once installed, remove comments in your code by opening the command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>), entering "Remove all comments" and pressing enter.
@@ -106,6 +106,6 @@ ext install plibither8.remove-comments
 
 ## ⚖️ License
 
-Copyright (c) Mihir Chaturvedi. All rights reserved.
+Copyright (c) Sumonst21. All rights reserved.
 
 Licensed under the [MIT](LICENSE) License.
