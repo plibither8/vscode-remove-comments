@@ -23,36 +23,37 @@ export class Parser {
     }
 
     public FindSingleLineComments(activeEditor: vscode.TextEditor): any {
-        for (var l = 0; l < activeEditor.document.lineCount; l++) {
-            let line = activeEditor.document.lineAt(l);
-            let matched = false;
-            for (var i = 0; i < this.delimiters.length; i++) {
-                if (!matched) {
-                    let expression = this.delimiters[i].replace(/\//ig, "\\/");
-                    let removeRange = this.removeRanges[i];
-                    let regEx = new RegExp(expression, "ig");
-                    let match = regEx.exec(line.text);
-                    if (match) {
-                        if (removeRange) {
-                            let startPos = new vscode.Position(l, match.index);
-                            let endPos = new vscode.Position(l, line.text.length);
-                            let range = new vscode.Range(startPos, endPos);
-                            this.edit.delete(this.uri, range);
-                            let n = activeEditor.document.getText(range);
-                            console.log("Removing : " + n);
-                        } else {
-                            let startPos = new vscode.Position(l, match.index);
-                            let endPos = new vscode.Position(l + 1, 0);
-                            let range = new vscode.Range(startPos, endPos);
-                            this.edit.delete(this.uri, range);
-                        }
-                        
-                        matched = true;
+    for (var l = 0; l < activeEditor.document.lineCount; l++) {
+        let line = activeEditor.document.lineAt(l);
+        let matched = false;
+        for (var i = 0; i < this.delimiters.length; i++) {
+            if (!matched) {
+                let delimiter = this.delimiters[i].replace(/\//ig, "\\/");
+                let expression = `(?<!:)${delimiter}`;
+                let regEx = new RegExp(expression, "ig");
+                let match = regEx.exec(line.text);
+                if (match) {
+                    if (this.removeRanges[i]) {
+                        let startPos = new vscode.Position(l, match.index);
+                        let endPos = new vscode.Position(l, line.text.length);
+                        let range = new vscode.Range(startPos, endPos);
+                        this.edit.delete(this.uri, range);
+                        let n = activeEditor.document.getText(range);
+                        console.log("Removing : " + n);
+                    } else {
+                        let startPos = new vscode.Position(l, match.index);
+                        let endPos = new vscode.Position(l + 1, 0);
+                        let range = new vscode.Range(startPos, endPos);
+                        this.edit.delete(this.uri, range);
                     }
+                    
+                    matched = true;
                 }
             }
         }
     }
+}
+
 
     public FindMultilineComments(activeEditor: vscode.TextEditor): void {
 
